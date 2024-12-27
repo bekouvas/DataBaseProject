@@ -1,4 +1,4 @@
--- Create the admin user
+-- Create the admin user ????????????????????????????????????????????????????????????????????????????????????????????????????????????
 DROP USER IF EXISTS 'db_admin'@'localhost';
 CREATE USER 'db_admin'@'localhost' IDENTIFIED BY 'adminPassword';
 GRANT ALL PRIVILEGES ON mydb.* TO 'db_admin'@'localhost'; 
@@ -23,6 +23,8 @@ FROM
     JOIN Customer c ON r.CustomerID = c.CustomerID
 WHERE 
     ra.RestaurantAdministratorID = CURRENT_USER; 
+    
+select * from AdminCustomerView;
     
 GRANT SELECT ON mydb.admincustomerview TO 'rest_admin'@'localhost';
     
@@ -59,9 +61,10 @@ FROM
     RestaurantAdministrator ra
     JOIN Restaurant rs ON ra.RestaurantAdministratorID = rs.RestaurantAdministratorID
     JOIN Reservation r ON rs.RestaurantID = r.RestaurantID
-    JOIN PreOrder pr ON r.ReservationID = pr.ReservationID
+    LEFT JOIN PreOrder pr ON r.ReservationID = pr.ReservationID
 WHERE 
-    ra.RestaurantAdministratorID = CURRENT_USER;
+    ra.RestaurantAdministratorID = CURRENT_USER();
+
     
 GRANT SELECT ON AdminPreOrderView TO 'rest_admin'@'localhost';
 
@@ -123,7 +126,7 @@ FROM
 WHERE 
     r.CustomerID = CURRENT_USER();
     
-GRANT SELECT, UPDATE ON UserReservationsView TO 'app_user'@'localhost';
+GRANT SELECT, UPDATE ON UserReservationsView TO 'user'@'localhost';
 
 
 
@@ -138,11 +141,10 @@ SELECT
 FROM 
     review rev
     JOIN restaurant rs ON rev.RestaurantID = rs.RestaurantID
-    JOIN reservation r ON rs.RestaurantID = r.RestaurantID
 WHERE 
-    r.CustomerID = CURRENT_USER();
+    rev.CustomerID = CURRENT_USER();
     
-GRANT SELECT, INSERT ON UserReviewsView TO 'app_user'@'localhost';
+GRANT SELECT, INSERT ON UserReviewsView TO 'user'@'localhost';
     
     
 DROP VIEW IF EXISTS UserPreOrdersView;
@@ -160,7 +162,7 @@ FROM
 WHERE 
     r.CustomerID = CURRENT_USER();
     
-GRANT SELECT, INSERT, UPDATE ON UserPreOrdersView TO 'app_user'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON UserPreOrdersView TO 'user'@'localhost';
     
 
     
@@ -176,7 +178,7 @@ FROM
 WHERE 
     n.CustomerID = CURRENT_USER();
     
-GRANT SELECT ON UserNotifications TO 'app_user'@'localhost';
+GRANT SELECT ON UserNotificationsView TO 'user'@'localhost';
     
     
 
@@ -185,6 +187,8 @@ GRANT SELECT ON UserNotifications TO 'app_user'@'localhost';
 
 
 -- TA INSERT ON PREPEI NA TO BALO STA TABLES POY DEN EXOUN JOINS
+
+
 
 
 

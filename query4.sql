@@ -1,10 +1,15 @@
-select
-c.Name as CustomerName,
-c.PhoneNumber,
-c.Email as CustomerEmail,
-r.Time as ReservationTime,
-po.SpecialRequest
-from preorder po join reservation r on po.ReservationID = r.ReservationID
-join customer c on c.CustomerID = r.CustomerID
-where r.RestaurantID = "10k10";
+SELECT 
+    c.Name AS CustomerName,
+    c.PhoneNumber,
+    c.Email AS CustomerEmail,
+    r.Time AS ReservationTime,
+    po.SpecialRequest
+FROM
+    preorder po
+        JOIN
+    reservation r ON po.ReservationID = r.ReservationID
+        JOIN
+    customer c ON c.CustomerID = r.CustomerID
+WHERE
+    r.RestaurantID = '10k10';
 
