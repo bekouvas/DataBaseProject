@@ -28,9 +28,17 @@ create role 'customer_role';
 
 -- Step 7: Grant specific privileges to the customer role
 GRANT SELECT, INSERT, UPDATE ON mydb.reservation TO 'customer_role';
+GRANT SELECT, INSERT ON mydb.preorder TO 'customer_role';
+GRANT SELECT ON mydb.restaurant TO 'customer_role';
+GRANT SELECT ON mydb.restaurantadministrator TO 'customer_role';
+GRANT SELECT, INSERT, UPDATE ON mydb.review TO 'customer_role';
+GRANT SELECT ON mydb.table TO 'customer_role';
+GRANT SELECT ON mydb.waitlist TO 'customer_role';
+GRANT SELECT, INSERT, UPDATE  ON mydb.customer TO 'customer_role';
+GRANT SELECT ON mydb.notification TO 'customer_role';
+GRANT SELECT, INSERT ON mydb.payment TO 'customer_role';
 
-
-grant 'customer_role' to 'customer_user'@'localhost';
+GRANT 'customer_role' to 'customer_user'@'localhost';
 
 -- Step 8: Apply changes
 FLUSH PRIVILEGES;
