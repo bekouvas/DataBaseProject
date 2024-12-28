@@ -42,6 +42,23 @@ INSERT INTO `customer` VALUES ('45Tn34','Giannis Antetokounmpo','jonhant@gmail.c
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `customer_log`
+--
+
+DROP TABLE IF EXISTS `customer_log`;
+/*!50001 DROP VIEW IF EXISTS `customer_log`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `customer_log` AS SELECT 
+ 1 AS `RestaurantName`,
+ 1 AS `ReservationDate`,
+ 1 AS `PreorderRequests`,
+ 1 AS `RestaurantRating`,
+ 1 AS `ReservationStatus`,
+ 1 AS `CustomerID`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `notification`
 --
 
@@ -95,35 +112,51 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+INSERT INTO `payment` VALUES ('134',0,'Mastercard',50,'E475'),('3jj65',1,'Visa',71.45,'HET45'),('4ow1',1,'Visa',105.7,'ERT56'),('aa2',0,'PayPal',38,'TK689'),('hB12',1,'ApplePay',23.5,'C153'),('jk23b6',1,'PayPal',43.7,'60');
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `pre-order`
+-- Temporary view structure for view `pendingpayments`
 --
 
-DROP TABLE IF EXISTS `pre-order`;
+DROP TABLE IF EXISTS `pendingpayments`;
+/*!50001 DROP VIEW IF EXISTS `pendingpayments`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `pendingpayments` AS SELECT 
+ 1 AS `ReservationID`,
+ 1 AS `RestaurantName`,
+ 1 AS `TotalAmount`,
+ 1 AS `PaymentMethod`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `preorder`
+--
+
+DROP TABLE IF EXISTS `preorder`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `pre-order` (
-  `Pre-OrderID` char(6) NOT NULL,
+CREATE TABLE `preorder` (
+  `PreOrderID` char(6) NOT NULL,
   `Status` tinyint NOT NULL,
   `SpecialRequest` varchar(200) DEFAULT NULL,
   `ReservationID` char(6) DEFAULT NULL,
-  PRIMARY KEY (`Pre-OrderID`),
+  PRIMARY KEY (`PreOrderID`),
   KEY `FK_PreOrder_Reservation` (`ReservationID`),
   CONSTRAINT `FK_PreOrder_Reservation` FOREIGN KEY (`ReservationID`) REFERENCES `reservation` (`ReservationID`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pre-order`
+-- Dumping data for table `preorder`
 --
 
-LOCK TABLES `pre-order` WRITE;
-/*!40000 ALTER TABLE `pre-order` DISABLE KEYS */;
-INSERT INTO `pre-order` VALUES ('475',1,'Can’t eat pepper','E475'),('560',1,'No salt in my food','60'),('C143',0,'Alergic to oregano','C153'),('ET56',1,'vegetarian','ERT56'),('HRT45',1,'I don’t eat onions','HET45'),('RIT5',1,'vegan','23ERT'),('TA689',0,'I want my stake well cooked','TK689');
-/*!40000 ALTER TABLE `pre-order` ENABLE KEYS */;
+LOCK TABLES `preorder` WRITE;
+/*!40000 ALTER TABLE `preorder` DISABLE KEYS */;
+INSERT INTO `preorder` VALUES ('475',1,'Can’t eat pepper','E475'),('560',1,'No salt in my food','60'),('C143',0,'Alergic to oregano','C153'),('ET56',1,'vegetarian','ERT56'),('HRT45',1,'I don’t eat onions','HET45'),('RIT5',1,'vegan','23ERT'),('TA689',0,'I want my stake well cooked','TK689');
+/*!40000 ALTER TABLE `preorder` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -243,7 +276,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
-INSERT INTO `review` VALUES ('12','The food was great . Prices were a bit expensive.',4.5,'17/12/2024','Sd1452','X1536'),('3567T','Nice place, good prices.',3.9,'12/12/2024','n1P65','10k10'),('45UI','Very nice atmosphare , amazing food!',5,'2/12/2024','kl41','8lO91'),('578ER','Best souvlaki in salonika.',5,'12/12/2024','45Tn34','T20h9'),('BR456','AWFUL FOOD, RUDE PEOPLE,0/5, !!!',0,'5/12/2024','4K78k1','29P45'),('HRTI8','Will definately vist again, really good restaurant.',4.8,'3/12/2024','Okl641','352Sa');
+INSERT INTO `review` VALUES ('12','The food was great . Prices were a bit expensive.',4.5,'17/12/2024','Sd1452','X1536'),('3567T','Nice place, good prices.',3.9,'12/12/2024','n1P65','10k10'),('578ER','Best souvlaki in salonika.',5,'12/12/2024','45Tn34','T20h9'),('BR456','AWFUL FOOD, RUDE PEOPLE,0/5, !!!',0,'5/12/2024','4K78k1','29P45'),('HRTI8','Will definately vist again, really good restaurant.',4.8,'3/12/2024','Okl641','352Sa');
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -305,6 +338,42 @@ LOCK TABLES `waitlist` WRITE;
 INSERT INTO `waitlist` VALUES ('1',2,'Sd1452','X1536'),('11',12,'45Tn34','T20h9'),('12',3,'kl41','8lO91'),('3',5,'4K78k1','29P45'),('4',6,'W968n1','35pR3'),('7',9,'Okl641','352Sa'),('9',4,'n1P65','10k10');
 /*!40000 ALTER TABLE `waitlist` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `customer_log`
+--
+
+/*!50001 DROP VIEW IF EXISTS `customer_log`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `customer_log` AS select `r`.`Name` AS `RestaurantName`,`res`.`Date` AS `ReservationDate`,`pre`.`SpecialRequest` AS `PreorderRequests`,`rev`.`Rating` AS `RestaurantRating`,`res`.`Status` AS `ReservationStatus`,`res`.`CustomerID` AS `CustomerID` from (((`restaurant` `r` join `reservation` `res` on((`r`.`RestaurantID` = `res`.`RestaurantID`))) left join `preorder` `pre` on((`res`.`ReservationID` = `pre`.`ReservationID`))) left join `review` `rev` on((`res`.`RestaurantID` = `rev`.`RestaurantID`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `pendingpayments`
+--
+
+/*!50001 DROP VIEW IF EXISTS `pendingpayments`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `pendingpayments` AS select `res`.`ReservationID` AS `ReservationID`,`r`.`Name` AS `RestaurantName`,`pay`.`Amount` AS `TotalAmount`,`pay`.`Method` AS `PaymentMethod` from (((`payment` `pay` join `reservation` `res` on((`pay`.`ReservationID` = `res`.`ReservationID`))) join `customer` `c` on((`res`.`CustomerID` = `c`.`CustomerID`))) join `restaurant` `r` on((`res`.`RestaurantID` = `r`.`RestaurantID`))) where (`pay`.`Status` = 0) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -315,4 +384,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-24 14:00:20
+-- Dump completed on 2024-12-28  1:57:50
