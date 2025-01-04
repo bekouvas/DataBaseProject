@@ -12,4 +12,6 @@ FROM
     customer c ON c.CustomerID = r.CustomerID
 WHERE
     r.RestaurantID = '10k10';
+    
+select * from reservation;
 

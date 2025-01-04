@@ -1,3 +1,7 @@
+DROP SCHEMA IF EXISTS `mydb`;
+CREATE SCHEMA `mydb`;
+USE `mydb`;
+
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: mydb
@@ -384,4 +388,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-28  1:57:50
+-- Dump completed on 2024-12-29 12:31:51
